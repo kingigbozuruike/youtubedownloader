@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import filedialog
 from pytube import YouTube
 
 root = Tk()
@@ -19,7 +20,8 @@ link_enter = Entry(root, width=70, textvariable=link).place(x=300, y=200)
 def download():
     url = YouTube(str(link.get()))
     video = url.streams.filter(file_extension='mp4', resolution='720p').first()
-    video.download()
+    download_location = filedialog.asksaveasfilename(defaultextension=".mp4", filetypes=[('MP4 files', '*.mp4')])
+    video.download(output_path=download_location)
     Label(root, text='Downloaded', font='arial 15', fg='white', bg='#202124').place(x=450, y=300)
 
 Button(root, text='Download', font='san-serif 16 bold', bg='red', padx=2, command=download).place(x=450,y=250)
